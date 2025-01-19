@@ -37,22 +37,12 @@
     position: relative;
 }
 
-/* Styling untuk tile berdasarkan tipe */
 .tile.firewall { border-color: #ff0000; }
 .tile.encryption { border-color: #0000ff; }
 .tile.datacenter { border-color: #ffa500; }
 .tile.antivirus { border-color: #00ff00; }
 .tile.special { background: #2a2a2a; }
 .tile.event { background: #332222; }
-
-/* Styling khusus untuk START dan FINISH */
-.tile[data-name="START"],
-.tile[data-name="FINISH"] {
-    background: #006400;
-    border-color: #00ff00;
-    font-weight: bold;
-    font-size: 14px;
-}
 
 .tile-name {
     font-weight: bold;
@@ -64,7 +54,6 @@
     color: #00ff00;
 }
 
-/* Styling untuk center board */
 .center-board {
     grid-column: 2 / 10;
     grid-row: 2 / 10;
@@ -97,6 +86,15 @@ button {
 
 button:hover {
     background: #00cc00;
+}
+
+/* Styling khusus untuk START dan FINISH */
+.tile[data-name="START"],
+.tile[data-name="FINISH"] {
+    background: #006400;
+    border-color: #00ff00;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 /* Menambahkan style untuk nomor tile */
@@ -373,4 +371,4 @@ button:disabled {
         opacity: 1;
         transform: translateY(0);
     }
-} 
+}

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Animasi sederhana untuk preview board
     const previewBoard = document.querySelector('.game-board-preview');
     
     previewBoard.addEventListener('mousemove', (e) => {
@@ -18,4 +19,4 @@ document.addEventListener('DOMContentLoaded', () => {
     previewBoard.addEventListener('mouseleave', () => {
         previewBoard.style.transform = 'rotateY(-30deg) rotateX(20deg)';
     });
-}); 
+});

@@ -1,4 +1,4 @@
-export class FinishMission {
+class FinishMission {
     constructor(gameInstance) {
         this.gameInstance = gameInstance;
         this.missionCard = null;
@@ -26,7 +26,7 @@ export class FinishMission {
     }
 
     calculateTotalSteps() {
-        return this.gameInstance.historyManager.history.filter(h => 
+        return this.gameInstance.gameHistory.filter(h => 
             h.activity.includes('Melempar dadu')
         ).length;
     }
@@ -38,14 +38,17 @@ export class FinishMission {
         
         // Disable semua tombol game
         this.gameInstance.toggleGameButtons(false);
+        
+        // Tambahkan ke history
+        this.gameInstance.addToHistory('🏆 Menyelesaikan permainan!');
     }
 
     initializeEventListeners() {
         const restartButton = document.getElementById('restart-game');
         if (restartButton) {
             restartButton.addEventListener('click', () => {
-                location.reload();
+                location.reload(); // Reload halaman untuk memulai permainan baru
             });
         }
     }
-} 
+}

@@ -1,4 +1,4 @@
-export class PasswordMission {
+class PasswordMission {
     constructor(gameInstance) {
         this.gameInstance = gameInstance;
         this.missionCard = null;
@@ -37,7 +37,7 @@ export class PasswordMission {
 
     hideMission() {
         const centerBoard = document.querySelector('.center-board');
-        centerBoard.innerHTML = '<h1>SOCISAFE<br>Social Media Security Game</h1>';
+        centerBoard.innerHTML = '<h1>CYBER DEFENSE<br>TYCOON</h1>';
     }
 
     initializeEventListeners() {
@@ -51,6 +51,7 @@ export class PasswordMission {
         const password = document.getElementById('password-attempt').value;
         const feedback = document.getElementById('password-feedback');
         
+        // Kriteria password
         const hasMinLength = password.length >= 8;
         const hasUpperCase = /[A-Z]/.test(password);
         const hasLowerCase = /[a-z]/.test(password);
@@ -83,6 +84,7 @@ export class PasswordMission {
 
         if (isValid) {
             feedbackMessage = '✅ Password valid! Misi selesai!';
+            // Tambahkan reward dan aktifkan kembali permainan
             setTimeout(() => {
                 this.hideMission();
                 this.gameInstance.completeMission();
@@ -90,18 +92,6 @@ export class PasswordMission {
         }
 
         feedback.innerHTML = feedbackMessage;
-    }
-
-    setupHoverPreview() {
-        const tile3 = document.querySelector('.tile[data-position="2"]');
-        if (tile3) {
-            tile3.addEventListener('mouseenter', () => 
-                this.gameInstance.previewManager.showPreview(tile3, this.previewCard, 'right')
-            );
-            tile3.addEventListener('mouseleave', () => 
-                this.gameInstance.previewManager.hidePreview()
-            );
-        }
     }
 
     initializePreviewCard() {
@@ -123,4 +113,47 @@ export class PasswordMission {
             </div>
         `;
     }
-} 
+
+    setupHoverPreview() {
+        const tile3 = document.querySelector('.tile[data-position="2"]');
+        if (tile3) {
+            tile3.addEventListener('mouseenter', () => this.showPreview(tile3));
+            tile3.addEventListener('mouseleave', () => this.hidePreview());
+        }
+    }
+
+    showPreview(tileElement) {
+        // Hapus preview yang mungkin sudah ada
+        this.hidePreview();
+
+        // Buat dan tambahkan preview card
+        const previewElement = document.createElement('div');
+        previewElement.className = 'preview-container';
+        previewElement.innerHTML = this.previewCard;
+
+        // Posisikan preview di samping tile
+        const tileRect = tileElement.getBoundingClientRect();
+        
+        // Penyesuaian posisi agar tidak keluar layar
+        let left = tileRect.right + 10;
+        let top = tileRect.top;
+
+        // Cek apakah preview akan keluar dari sisi kanan layar
+        if (left + 300 > window.innerWidth) { // 300 adalah lebar preview card
+            left = tileRect.left - 310; // Tampilkan di sebelah kiri tile
+        }
+
+        previewElement.style.position = 'fixed';
+        previewElement.style.left = `${left}px`;
+        previewElement.style.top = `${top}px`;
+
+        document.body.appendChild(previewElement);
+    }
+
+    hidePreview() {
+        const existingPreview = document.querySelector('.preview-container');
+        if (existingPreview) {
+            existingPreview.remove();
+        }
+    }
+}

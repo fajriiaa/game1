@@ -1,4 +1,4 @@
-export class SocialMission {
+class SembilanMission {
     constructor(gameInstance) {
         this.gameInstance = gameInstance;
         this.missionCard = null;
@@ -32,7 +32,7 @@ export class SocialMission {
 
     hideMission() {
         const centerBoard = document.querySelector('.center-board');
-        centerBoard.innerHTML = '<h1>SOCISAFE<br>Social Media Security Game</h1>';
+        centerBoard.innerHTML = '<h1>SOCISAFE<br>Social Media Safe</h1>';
     }
 
     initializeEventListeners() {
@@ -43,26 +43,9 @@ export class SocialMission {
     }
 
     checkMission() {
+        // Logika pengecekan misi akan diimplementasikan nanti
         const feedback = document.getElementById('mission-feedback');
         feedback.innerHTML = 'Misi dalam pengembangan';
-        
-        // Untuk testing, bisa langsung selesaikan misi
-        setTimeout(() => {
-            this.hideMission();
-            this.gameInstance.completeMission();
-        }, 2000);
-    }
-
-    setupHoverPreview() {
-        const tile9 = document.querySelector('.tile[data-position="8"]');
-        if (tile9) {
-            tile9.addEventListener('mouseenter', () => 
-                this.gameInstance.previewManager.showPreview(tile9, this.previewCard, 'right')
-            );
-            tile9.addEventListener('mouseleave', () => 
-                this.gameInstance.previewManager.hidePreview()
-            );
-        }
     }
 
     initializePreviewCard() {
@@ -83,4 +66,42 @@ export class SocialMission {
             </div>
         `;
     }
-} 
+
+    setupHoverPreview() {
+        const tile9 = document.querySelector('.tile[data-position="8"]');
+        if (tile9) {
+            tile9.addEventListener('mouseenter', () => this.showPreview(tile9));
+            tile9.addEventListener('mouseleave', () => this.hidePreview());
+        }
+    }
+
+    showPreview(tileElement) {
+        this.hidePreview();
+
+        const previewElement = document.createElement('div');
+        previewElement.className = 'preview-container';
+        previewElement.innerHTML = this.previewCard;
+
+        const tileRect = tileElement.getBoundingClientRect();
+        
+        let left = tileRect.right + 10;
+        let top = tileRect.top;
+
+        if (left + 300 > window.innerWidth) {
+            left = tileRect.left - 310;
+        }
+
+        previewElement.style.position = 'fixed';
+        previewElement.style.left = `${left}px`;
+        previewElement.style.top = `${top}px`;
+
+        document.body.appendChild(previewElement);
+    }
+
+    hidePreview() {
+        const existingPreview = document.querySelector('.preview-container');
+        if (existingPreview) {
+            existingPreview.remove();
+        }
+    }
+}
